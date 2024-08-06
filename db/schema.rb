@@ -22,13 +22,13 @@ ActiveRecord::Schema[7.0].define(version: 2024_08_01_151219) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "first_name", null: false
-    t.string "last_name", null: false
-    t.string "phone_number", null: false
-    t.string "address", null: false
-    t.string "city", null: false
-    t.string "state", null: false
-    t.string "zip_code", null: false
+    t.string "first_name", default: "", null: false
+    t.string "last_name", default: "", null: false
+    t.string "phone_number", default: "", null: false
+    t.string "address", default: "", null: false
+    t.string "city", default: "", null: false
+    t.string "state", default: "", null: false
+    t.string "zip_code", default: "", null: false
     t.date "date_of_birth", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

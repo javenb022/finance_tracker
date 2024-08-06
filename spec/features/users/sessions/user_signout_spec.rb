@@ -1,11 +1,12 @@
 require "rails_helper"
 
-RSpec.feature "User Sign Out", type: :feature do
+RSpec.feature "User Sign Out" do
   let(:user) { create(:user) }
 
   before do
     sign_in user
   end
+
   describe "Happy path tests" do
     scenario "User signs out successfully" do
       visit root_path
