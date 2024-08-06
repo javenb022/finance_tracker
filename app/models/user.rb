@@ -3,6 +3,7 @@ class User < ApplicationRecord
 
   devise  :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable
 
+  # password is not required for updating a user, only for creating a new user
   validates :password, presence: true, on: :create
   validates :first_name, :last_name, :phone_number, :address, :city, :state, :zip_code, :date_of_birth, presence: true
   validates :email, uniqueness: { case_sensitive: false }, presence: true
@@ -13,6 +14,7 @@ class User < ApplicationRecord
   private
 
   def downcase_email
+    # This method is called to handle email case sensitivity and downcase the email before saving it to the database.
     self.email = email.downcase
   end
 end
