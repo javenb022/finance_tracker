@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'User Sign In', type: :feature do
+RSpec.feature 'User Sign In' do
   let(:user) { create(:user) }
 
   describe 'Happy path tests' do

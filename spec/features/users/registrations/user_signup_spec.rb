@@ -2,11 +2,10 @@ require "rails_helper"
 
 # future tests: wrong values in fields
 
-RSpec.feature "User Signup", type: :feature do
-  before(:each) do
-    @user = User.create!(first_name: "John", last_name: "Doe", email: "john@email.com", password: "password123", phone_number: "123-456-7890", address: "123 Main St", city: "Anytown", state: "NY", zip_code: "12345", date_of_birth: "2022-01-01")
-  end
+RSpec.feature "User Signup" do
   describe "Happy path tests" do
+    let(:user) { create(:user) }
+
     scenario "User signs up with valid credentials" do
       visit new_user_registration_path
 
@@ -29,20 +28,22 @@ RSpec.feature "User Signup", type: :feature do
   end
 
   describe "Sad path tests" do
+    let(:user) { create(:user) }
+
     scenario "User signs up with invalid email" do
       visit new_user_registration_path
 
-      fill_in "user_email", with: @user.email
-      fill_in "user_password", with: @user.password
-      fill_in "user_password_confirmation", with: @user.password
-      fill_in "user_first_name", with: @user.first_name
-      fill_in "user_last_name", with: @user.last_name
-      fill_in "user_phone_number", with: @user.phone_number
-      fill_in "user_address", with: @user.address
-      fill_in "user_city", with: @user.city
-      fill_in "user_state", with: @user.state
-      fill_in "user_zip_code", with: @user.zip_code
-      fill_in "user_date_of_birth", with: @user.date_of_birth
+      fill_in "user_email", with: user.email
+      fill_in "user_password", with: user.password
+      fill_in "user_password_confirmation", with: user.password
+      fill_in "user_first_name", with: user.first_name
+      fill_in "user_last_name", with: user.last_name
+      fill_in "user_phone_number", with: user.phone_number
+      fill_in "user_address", with: user.address
+      fill_in "user_city", with: user.city
+      fill_in "user_state", with: user.state
+      fill_in "user_zip_code", with: user.zip_code
+      fill_in "user_date_of_birth", with: user.date_of_birth
       click_button "Sign up"
 
       expect(page).to have_content("Email has already been taken")
@@ -52,17 +53,17 @@ RSpec.feature "User Signup", type: :feature do
     scenario "User signs up with mismatched passwords" do
       visit new_user_registration_path
 
-      fill_in "user_email", with: @user.email
-      fill_in "user_password", with: @user.password
+      fill_in "user_email", with: user.email
+      fill_in "user_password", with: user.password
       fill_in "user_password_confirmation", with: "nottherightpassword"
-      fill_in "user_first_name", with: @user.first_name
-      fill_in "user_last_name", with: @user.last_name
-      fill_in "user_phone_number", with: @user.phone_number
-      fill_in "user_address", with: @user.address
-      fill_in "user_city", with: @user.city
-      fill_in "user_state", with: @user.state
-      fill_in "user_zip_code", with: @user.zip_code
-      fill_in "user_date_of_birth", with: @user.date_of_birth
+      fill_in "user_first_name", with: user.first_name
+      fill_in "user_last_name", with: user.last_name
+      fill_in "user_phone_number", with: user.phone_number
+      fill_in "user_address", with: user.address
+      fill_in "user_city", with: user.city
+      fill_in "user_state", with: user.state
+      fill_in "user_zip_code", with: user.zip_code
+      fill_in "user_date_of_birth", with: user.date_of_birth
       click_button "Sign up"
 
       expect(page).to have_content("Password confirmation doesn't match Password")
@@ -73,25 +74,25 @@ RSpec.feature "User Signup", type: :feature do
       visit new_user_registration_path
 
       fill_in "user_email", with: "newuser@email.com"
-      fill_in "user_password", with: @user.password
-      fill_in "user_password_confirmation", with: @user.password
-      fill_in "user_first_name", with: @user.first_name
-      # fill_in "user_last_name", with: @user.last_name
-      fill_in "user_phone_number", with: @user.phone_number
-      fill_in "user_address", with: @user.address
-      fill_in "user_city", with: @user.city
-      fill_in "user_state", with: @user.state
-      # fill_in "user_zip_code", with: @user.zip_code
-      fill_in "user_date_of_birth", with: @user.date_of_birth
+      fill_in "user_password", with: user.password
+      fill_in "user_password_confirmation", with: user.password
+      fill_in "user_first_name", with: user.first_name
+      # fill_in "user_last_name", with: user.last_name
+      fill_in "user_phone_number", with: user.phone_number
+      fill_in "user_address", with: user.address
+      fill_in "user_city", with: user.city
+      fill_in "user_state", with: user.state
+      # fill_in "user_zip_code", with: user.zip_code
+      fill_in "user_date_of_birth", with: user.date_of_birth
       click_button "Sign up"
 
       expect(page).to have_content("Last name can't be blank")
       expect(page).to have_content("Zip code can't be blank")
       expect(page).to have_current_path(user_registration_path)
 
-      expect(page).to_not have_content("Email has already been taken")
-      expect(page).to_not have_content("Password confirmation doesn't match Password")
-      expect(page).to_not have_content("Password can't be blank")
+      expect(page).to have_no_content("Email has already been taken")
+      expect(page).to have_no_content("Password confirmation doesn't match Password")
+      expect(page).to have_no_content("Password can't be blank")
     end
   end
 end
