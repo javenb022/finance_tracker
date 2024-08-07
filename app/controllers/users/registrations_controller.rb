@@ -6,6 +6,15 @@ module Users
     before_action :configure_sign_up_params
     before_action :configure_account_update_params
 
+    def show
+      if current_user
+        @user = User.find(current_user.id)
+      else
+        redirect_to root_path
+        flash[:error] = "You must be logged in to visit that page."
+      end
+    end
+
     # GET /resource/sign_up
     # def new
     #   super
