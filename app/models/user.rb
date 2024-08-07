@@ -3,6 +3,9 @@
 # This model also includes validations for the user data, such as presence, uniqueness, and length validations.
 class User < ApplicationRecord
   before_save :downcase_email
+  has_many :accounts, dependent: :destroy
+  has_many :categories, dependent: :destroy
+  has_many :transactions, dependent: :destroy
 
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable
 
