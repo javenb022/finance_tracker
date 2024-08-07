@@ -1,0 +1,15 @@
+<h1><%= @user.first_name %>'s Profile</h1>
+<div>
+  <p><strong>First Name:</strong> <%= @user.first_name %></p>
+  <p><strong>Last Name:</strong> <%= @user.last_name %></p>
+  <p><strong>Email:</strong> <%= @user.email %></p>
+  <p><strong>Phone Number:</strong> <%= @user.phone_number %></p>
+  <p><strong>Address:</strong> <%= @user.address %></p>
+  <p><strong>City:</strong> <%= @user.city %></p>
+  <p><strong>State:</strong> <%= @user.state %></p>
+  <p><strong>Zip Code:</strong> <%= @user.zip_code %></p>
+  <p><strong>Date of Birth:</strong> <%= @user.date_of_birth %></p>
+
+  <p><%= link_to "Edit Profile", edit_user_registration_path %></p>
+  <p><%= link_to "Back", root_path %></p>
+</div>

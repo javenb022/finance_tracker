@@ -5,4 +5,7 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "articles#index"
   root "home#index"
+  devise_scope :user do
+    get "profile", to: "users/registrations#show"
+  end
 end

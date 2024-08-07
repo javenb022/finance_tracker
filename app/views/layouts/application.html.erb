@@ -15,11 +15,15 @@
     <p class="alert"><%= alert %></p>
 
     <% if user_signed_in? %>
-      <%= link_to "Profile", edit_user_registration_path %>
+      <%= link_to "Profile", profile_path %>
       <%= button_to "Sign out", destroy_user_session_path, method: :delete %>
     <% else %>
       <%= link_to "Sign in", new_user_session_path %>
       <%= link_to "Sign up", new_user_registration_path %>
+    <% end %>
+
+    <% flash.each do |type, message| %>
+      <p><%= message %></p>
     <% end %>
     <%= yield %>
   </body>
