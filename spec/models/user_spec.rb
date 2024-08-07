@@ -25,4 +25,10 @@ RSpec.describe User do
     it { is_expected.to allow_value('2022-01-01').for(:date_of_birth) }
     it { is_expected.not_to allow_value('2022-13-01').for(:date_of_birth) }
   end
+
+  describe 'associations' do
+    it { is_expected.to have_many(:accounts).dependent(:destroy) }
+    it { is_expected.to have_many(:categories).dependent(:destroy) }
+    it { is_expected.to have_many(:transactions).dependent(:destroy) }
+  end
 end
