@@ -7,5 +7,6 @@ Rails.application.routes.draw do
   root "home#index"
   devise_scope :user do
     get "profile", to: "users/registrations#show"
+    get "dashboard", to: "users/dashboard#show"
   end
 end

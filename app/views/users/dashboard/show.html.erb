@@ -1,0 +1,6 @@
+<h1><%= @user.first_name %>'s Dashboard</h1>
+<h2>Accounts</h2>
+<% @accounts.each do |account| %>
+  <h3><%= account.name %></h3>
+  <p><%= number_to_currency(account.balance, unit: "$", separator: ".", delimiter: "") %></p>
+<% end %>
