@@ -17,6 +17,34 @@ class User < ApplicationRecord
   validates :date_of_birth, format: { with: /\d{4}-\d{2}-\d{2}/ }
   validates :state, length: { is: 2 }
 
+
+  def grouped_checking_transactions
+    checking_accounts = accounts.where(account_type: "checking")
+    # This iterates over each checking account and creates a hash with the account as the key and the transactions as the value.
+    transactions_by_account = checking_accounts.each_with_object({}) do |account, hash|
+      hash[account] = account.transactions
+    end
+    transactions_by_account
+  end
+
+  def grouped_savings_transactions
+    savings_accounts = accounts.where(account_type: "savings")
+    # This iterates over each savings account and creates a hash with the account as the key and the transactions as the value.
+    transactions_by_account = savings_accounts.each_with_object({}) do |account, hash|
+      hash[account] = account.transactions
+    end
+    transactions_by_account
+  end
+
+  def grouped_credit_card_transactions
+    credit_card_accounts = accounts.where(account_type: "credit")
+    # This iterates over each credit card account and creates a hash with the account as the key and the transactions as the value.
+    transactions_by_account = credit_card_accounts.each_with_object({}) do |account, hash|
+      hash[account] = account.transactions
+    end
+    transactions_by_account
+  end
+
   private
 
   def downcase_email
