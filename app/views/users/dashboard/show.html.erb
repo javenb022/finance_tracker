@@ -1,6 +1,32 @@
 <h1><%= @user.first_name %>'s Dashboard</h1>
 <h2>Accounts</h2>
-<% @accounts.each do |account| %>
-  <h3><%= account.name %></h3>
-  <p><%= number_to_currency(account.balance, unit: "$", separator: ".", delimiter: "") %></p>
+<% if @grouped_checking_transactions.any? %>
+  <% @grouped_checking_transactions.each do |account, transactions| %>
+    <h3><%= account.name %></h3>
+    <p><%= number_to_currency(account.balance, unit: "$", separator: ".", delimiter: "") %></p>
+    <h4>Current Months Transactions</h4>
+    <% transactions.each do |transaction| %>
+      <li>Description: <%= transaction.description %> - <%= number_to_currency(transaction.amount, unit: "$", separator: ".", delimiter: "") %>Date:<%= transaction.transaction_date %></li>
+    <% end %>
+  <% end %>
+<% end %>
+<% if @grouped_savings_transactions.any? %>
+  <% @grouped_savings_transactions.each do |account, transactions| %>
+    <h3><%= account.name %></h3>
+    <p><%= number_to_currency(account.balance, unit: "$", separator: ".", delimiter: "") %></p>
+    <h4>Current Months Transactions</h4>
+    <% transactions.each do |transaction| %>
+      <li>Description: <%= transaction.description %> - <%= number_to_currency(transaction.amount, unit: "$", separator: ".", delimiter: "") %>Date:<%= transaction.transaction_date %></li>
+    <% end %>
+  <% end %>
+<% end %>
+<% if @grouped_credit_card_transactions.any? %>
+  <% @grouped_credit_card_transactions.each do |account, transactions| %>
+    <h3><%= account.name %></h3>
+    <p><%= number_to_currency(account.balance, unit: "$", separator: ".", delimiter: "") %></p>
+    <h4>Current Months Transactions</h4>
+    <% transactions.each do |transaction| %>
+      <li>Description: <%= transaction.description %> - <%= number_to_currency(transaction.amount, unit: "$", separator: ".", delimiter: "") %>Date:<%= transaction.transaction_date %></li>
+    <% end %>
+  <% end %>
 <% end %>
