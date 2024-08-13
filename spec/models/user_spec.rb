@@ -31,4 +31,30 @@ RSpec.describe User do
     it { is_expected.to have_many(:categories).dependent(:destroy) }
     it { is_expected.to have_many(:transactions).dependent(:destroy) }
   end
+
+  describe "instance methods" do
+    it "#grouped_checking_transactions" do
+      category = create(:category, user: @user)
+      account = @user.accounts.create!(name: "Checking", balance: 4336.07, currency: "USD", account_type: 0)
+      transaction = @user.transactions.create!(amount: 63.80, transaction_type: 1, category: category, transaction_date: Date.today - 1.month, account: account, description: "Bought groceries")
+
+      expect(@user.grouped_checking_transactions).to eq({ account => [transaction] })
+    end
+
+    it "#grouped_savings_transactions" do
+      category = create(:category, user: @user)
+      account = @user.accounts.create!(name: "Savings", balance: 1000.00, currency: "USD", account_type: 1)
+      transaction = @user.transactions.create!(amount: 100.00, transaction_type: 1, category: category, transaction_date: Date.today - 1.month, account: account, description: "Deposit")
+
+      expect(@user.grouped_savings_transactions).to eq({ account => [transaction] })
+    end
+
+    it "#grouped_credit_card_transactions" do
+      category = create(:category, user: @user)
+      account = @user.accounts.create!(name: "Credit Card", balance: 0.00, currency: "USD", account_type: 2)
+      transaction = @user.transactions.create!(amount: 100.00, transaction_type: 1, category: category, transaction_date: Date.today - 1.month, account: account, description: "Payment")
+
+      expect(@user.grouped_credit_card_transactions).to eq({ account => [transaction] })
+    end
+  end
 end
