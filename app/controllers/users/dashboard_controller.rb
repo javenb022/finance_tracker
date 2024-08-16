@@ -7,6 +7,7 @@ module Users
       @grouped_checking_transactions = @user.grouped_checking_transactions
       @grouped_savings_transactions = @user.grouped_savings_transactions
       @grouped_credit_card_transactions = @user.grouped_credit_card_transactions
+      @recent_transactions = @user.recent_transactions
     end
   end
 end
