@@ -6,7 +6,7 @@
     <p><%= number_to_currency(account.balance, unit: "$", separator: ".", delimiter: "") %></p>
     <h4>Current Months Transactions</h4>
     <% transactions.each do |transaction| %>
-      <li>Description: <%= transaction.description %> - <%= number_to_currency(transaction.amount, unit: "$", separator: ".", delimiter: "") %>Date:<%= transaction.transaction_date %></li>
+      <li>Description: <%= transaction.description %> - <%= number_to_currency(transaction.amount, unit: "$", separator: ".", delimiter: "") %> Date:<%= transaction.transaction_date %></li>
     <% end %>
   <% end %>
 <% end %>
@@ -16,7 +16,7 @@
     <p><%= number_to_currency(account.balance, unit: "$", separator: ".", delimiter: "") %></p>
     <h4>Current Months Transactions</h4>
     <% transactions.each do |transaction| %>
-      <li>Description: <%= transaction.description %> - <%= number_to_currency(transaction.amount, unit: "$", separator: ".", delimiter: "") %>Date:<%= transaction.transaction_date %></li>
+      <li>Description: <%= transaction.description %> - <%= number_to_currency(transaction.amount, unit: "$", separator: ".", delimiter: "") %> Date:<%= transaction.transaction_date %></li>
     <% end %>
   <% end %>
 <% end %>
@@ -26,7 +26,13 @@
     <p><%= number_to_currency(account.balance, unit: "$", separator: ".", delimiter: "") %></p>
     <h4>Current Months Transactions</h4>
     <% transactions.each do |transaction| %>
-      <li>Description: <%= transaction.description %> - <%= number_to_currency(transaction.amount, unit: "$", separator: ".", delimiter: "") %>Date:<%= transaction.transaction_date %></li>
+      <li>Description: <%= transaction.description %> - <%= number_to_currency(transaction.amount, unit: "$", separator: ".", delimiter: "") %> Date:<%= transaction.transaction_date %></li>
     <% end %>
   <% end %>
 <% end %>
+<div class="recent-transactions">
+  <h2>Recent Transactions</h2>
+  <% @recent_transactions.each do |transaction| %>
+    <li>Description: <%= transaction.description %> - <%= number_to_currency(transaction.amount, unit: "$", separator: ".", delimiter: "") %> Date:<%= transaction.transaction_date %></li>
+  <% end %>
+</div>
