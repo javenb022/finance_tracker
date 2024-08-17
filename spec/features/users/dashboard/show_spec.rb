@@ -3,12 +3,16 @@ require "rails_helper"
 RSpec.describe "User Dashboard", type: :feature do
   let(:user) { create(:user) }
   let(:user2) { create(:user) }
+  let!(:categories) { create_list(:category, 3, user: user) }
+  let!(:account) { create_list(:account, 3, user: user) }
+  let!(:old_transactions) { create_list(:transaction, 15, user: user, account: account.sample, category: categories.sample, transaction_date: 1.month.ago) }
+  let!(:recent_transactions) { create_list(:transaction, 5, user: user, account: account.sample, category: categories.sample, transaction_date: Date.today) }
 
   context "when user is logged in" do
     scenario "user can see the dashboard" do
       login_as(user)
       visit dashboard_path
-
+      
       expect(page).to have_content("#{user.first_name}'s Dashboard")
       expect(page).to have_current_path(dashboard_path)
     end
@@ -58,7 +62,22 @@ RSpec.describe "User Dashboard", type: :feature do
 
       expect(page).to have_content("Test Checking")
       expect(page).to have_content("Savings")
-      
+    end
+
+
+    scenario "user can see their 5 most recent transactions" do
+      login_as(user)
+      visit dashboard_path
+
+      within(".recent-transactions") do
+        recent_transactions.each do |transaction|
+          expect(page).to have_content(transaction.description)
+        end
+
+        old_transactions.each do |transaction|
+          expect(page).not_to have_content(transaction.description)
+        end
+      end
     end
   end
 

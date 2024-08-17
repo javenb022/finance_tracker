@@ -45,6 +45,10 @@ class User < ApplicationRecord
     transactions_by_account
   end
 
+  def recent_transactions
+    transactions.sort_by(&:transaction_date).reverse.take(5)
+  end
+
   private
 
   def downcase_email
