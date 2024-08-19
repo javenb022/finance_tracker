@@ -36,3 +36,6 @@
     <li>Description: <%= transaction.description %> - <%= number_to_currency(transaction.amount, unit: "$", separator: ".", delimiter: "") %> Date:<%= transaction.transaction_date %></li>
   <% end %>
 </div>
+<div class="income-graph">
+  <%= column_chart @monthly_income, xtitle: "Date", ytitle: "Income", colors: ["#C2BBF0", "#8FB8ED"], prefix: "$", thousands: ",", width: "700px", height: "450px" %>
+</div>

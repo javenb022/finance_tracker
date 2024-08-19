@@ -8,6 +8,7 @@ module Users
       @grouped_savings_transactions = @user.grouped_savings_transactions
       @grouped_credit_card_transactions = @user.grouped_credit_card_transactions
       @recent_transactions = @user.recent_transactions
+      @monthly_income = @user.monthly_income
     end
   end
 end

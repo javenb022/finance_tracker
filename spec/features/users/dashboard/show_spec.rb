@@ -12,7 +12,7 @@ RSpec.describe "User Dashboard", type: :feature do
     scenario "user can see the dashboard" do
       login_as(user)
       visit dashboard_path
-      
+
       expect(page).to have_content("#{user.first_name}'s Dashboard")
       expect(page).to have_current_path(dashboard_path)
     end
