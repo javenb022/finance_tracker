@@ -49,6 +49,15 @@ class User < ApplicationRecord
     transactions.sort_by(&:transaction_date).reverse.take(5)
   end
 
+  def monthly_income
+    # The sum of all transactions where the type is income and is grouped months
+    data = transactions.find_by_sql("SELECT TO_CHAR(transaction_date, 'YYYY-MM') AS month, SUM(amount) AS total_amount FROM Transactions WHERE transaction_type = 0 GROUP BY TO_CHAR(transaction_date, 'YYYY-MM') ORDER BY month;")
+    formatted_data = data.map do |i|
+      [i.month, i.total_amount]
+    end
+    formatted_data
+  end
+
   private
 
   def downcase_email
