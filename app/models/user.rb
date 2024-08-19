@@ -51,12 +51,47 @@ class User < ApplicationRecord
 
   def monthly_income
     # The sum of all transactions where the type is income and is grouped months
+    income_data = initialize_month_hash
+
     data = transactions.find_by_sql("SELECT TO_CHAR(transaction_date, 'YYYY-MM') AS month, SUM(amount) AS total_amount FROM Transactions WHERE transaction_type = 0 GROUP BY TO_CHAR(transaction_date, 'YYYY-MM') ORDER BY month;")
+    formatted_data = format_transactions(data)
+
+    formatted_income_data = formatted_data.each_with_object(income_data) do |(month, amount), hash|
+      formatted_month = Date.strptime(month, '%Y-%m').strftime('%B %Y')
+      hash[formatted_month] = amount
+    end
+    formatted_income_data
+  end
+
+  def monthly_expenses
+    # The sum of all transactions where the type is income and is grouped months
+    expense_data = initialize_month_hash
+
+    data = transactions.find_by_sql("SELECT TO_CHAR(transaction_date, 'YYYY-MM') AS month, SUM(amount) AS total_amount FROM Transactions WHERE transaction_type = 1 GROUP BY TO_CHAR(transaction_date, 'YYYY-MM') ORDER BY month;")
+    formatted_data = format_transactions(data)
+
+    formatted_expense_data = formatted_data.each_with_object(expense_data) do |(month, amount), hash|
+      formatted_month = Date.strptime(month, '%Y-%m').strftime('%B %Y')
+      hash[formatted_month] = amount
+    end
+    formatted_expense_data
+  end
+
+  def initialize_month_hash
+    start_date = transactions.minimum(:transaction_date).beginning_of_month
+    end_date = Date.current.end_of_month
+
+    all_months = (start_date.to_date..end_date.to_date).map { |date| date.strftime("%B %Y") }.uniq
+    expense_data = all_months.map { |month| [month, 0] }.to_h
+    expense_data
+  end
+
+  def format_transactions(data)
     formatted_data = data.map do |i|
       [i.month, i.total_amount]
     end
-    formatted_data
   end
+
 
   private
 
