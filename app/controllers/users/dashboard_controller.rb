@@ -10,6 +10,7 @@ module Users
       @recent_transactions = @user.recent_transactions
       @monthly_income = @user.monthly_income
       @monthly_expenses = @user.monthly_expenses
+      @expenses_by_category = @user.expenses_by_category
     end
   end
 end

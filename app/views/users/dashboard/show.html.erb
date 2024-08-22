@@ -37,8 +37,11 @@
   <% end %>
 </div>
 <div class="income-graph">
-  <%= column_chart @monthly_income, xtitle: "Date", ytitle: "Income", colors: ["#C2BBF0", "#8FB8ED"], prefix: "$", thousands: ",", width: "700px", height: "450px" %>
+  <%= column_chart @monthly_income, title: "Income by Month", xtitle: "Date", ytitle: "Income", colors: ["#C2BBF0", "#8FB8ED"], prefix: "$", thousands: ",", width: "700px", height: "450px" %>
 </div>
 <div class="expenses-graph">
-  <%= column_chart @monthly_expenses, xtitle: "Date", ytitle: "Expenses", colors: ["#C2BBF0", "#8FB8ED"], prefix: "$", thousands: ",", width: "700px", height: "450px" %>
+  <%= column_chart @monthly_expenses, title: "Expenses by Month", xtitle: "Date", ytitle: "Expenses", colors: ["#C2BBF0", "#8FB8ED"], prefix: "$", thousands: ",", width: "700px", height: "450px" %>
+</div>
+<div class="category-chart">
+  <%= pie_chart @expenses_by_category, title: "Expenses By Category", colors: ["#C2BBF0", "#8FB8ED", "#F0C2C2", "#ED8F8F", "#F0EAC2", "#EDF18F"], prefix: "$", thousands: ",", width: "700px", height: "450px" %>
 </div>

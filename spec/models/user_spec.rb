@@ -131,7 +131,26 @@ RSpec.describe User do
       expected = [["2024-06", 127.6], ["2024-08", 319.0]]
       actual = @user.format_transactions(data)
       actual_formatted = actual.map { |month, amount| [month, amount.to_f] }
-      
+
+      expect(actual_formatted).to eq(expected)
+    end
+
+    it "#expenses_by_category" do
+      category1 = create(:category, user: @user, name: "Groceries")
+      category2 = create(:category, user: @user, name: "Rent")
+      account = @user.accounts.create!(name: "Checking", balance: 4336.07, currency: "USD", account_type: 0)
+      transaction1 = @user.transactions.create!(amount: 63.80, transaction_type: 1, category: category1, transaction_date: Date.today, account: account, description: "Bought groceries")
+      transaction2 = @user.transactions.create!(amount: 63.80, transaction_type: 1, category: category1, transaction_date: Date.today - 2.day, account: account, description: "Bought groceries")
+      transaction3 = @user.transactions.create!(amount: 63.80, transaction_type: 1, category: category2, transaction_date: Date.today - 3.day, account: account, description: "Paid rent")
+      transaction4 = @user.transactions.create!(amount: 63.80, transaction_type: 1, category: category2, transaction_date: Date.today - 4.day, account: account, description: "Paid rent")
+      transaction5 = @user.transactions.create!(amount: 63.80, transaction_type: 1, category: category2, transaction_date: Date.today - 5.day, account: account, description: "Paid rent")
+      transaction6 = @user.transactions.create!(amount: 63.80, transaction_type: 1, category: category1, transaction_date: Date.today - 2.months, account: account, description: "Bought groceries")
+      transaction7 = @user.transactions.create!(amount: 63.80, transaction_type: 1, category: category1, transaction_date: Date.today - 2.months, account: account, description: "Bought groceries")
+
+      expected = [["Groceries", 255.2], ["Rent", 191.4]]
+      actual = @user.expenses_by_category
+      actual_formatted = actual.map { |name, amount| [name, amount.to_f] }
+
       expect(actual_formatted).to eq(expected)
     end
   end
