@@ -77,6 +77,12 @@ class User < ApplicationRecord
     formatted_expense_data
   end
 
+  def expenses_by_category
+    # The sum of all transactions where the type is expense and is grouped by category, returning the category name and the total amount spent in that category.
+    results = transactions.find_by_sql("SELECT c.name AS category, SUM(t.amount) AS total_amount FROM Transactions t JOIN Categories c ON t.category_id = c.id WHERE t.transaction_type = 1 GROUP BY c.name ORDER BY total_amount DESC;")
+    results.map { |result| [result['category'], result['total_amount']] }
+  end
+
   def initialize_month_hash
     start_date = transactions.minimum(:transaction_date).beginning_of_month
     end_date = Date.current.end_of_month
