@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Transaction, type: :model do
+RSpec.describe Transaction do
   describe "validations" do
     it { is_expected.to validate_presence_of(:amount) }
     it { is_expected.to validate_presence_of(:transaction_type) }

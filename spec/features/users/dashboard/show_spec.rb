@@ -1,12 +1,12 @@
 require "rails_helper"
 
-RSpec.describe "User Dashboard", type: :feature do
+RSpec.describe "User Dashboard" do
   let(:user) { create(:user) }
   let(:user2) { create(:user) }
-  let!(:categories) { create_list(:category, 3, user: user) }
-  let!(:account) { create_list(:account, 3, user: user) }
-  let!(:old_transactions) { create_list(:transaction, 15, user: user, account: account.sample, category: categories.sample, transaction_date: 1.month.ago) }
-  let!(:recent_transactions) { create_list(:transaction, 5, user: user, account: account.sample, category: categories.sample, transaction_date: Date.today) }
+  let!(:categories) { create_list(:category, 3, user:) }
+  let!(:account) { create_list(:account, 3, user:) }
+  let!(:old_transactions) { create_list(:transaction, 15, user:, account: account.sample, category: categories.sample, transaction_date: 1.month.ago) }
+  let!(:recent_transactions) { create_list(:transaction, 5, user:, account: account.sample, category: categories.sample, transaction_date: Time.zone.today) }
 
   context "when user is logged in" do
     scenario "user can see the dashboard" do
@@ -18,7 +18,7 @@ RSpec.describe "User Dashboard", type: :feature do
     end
 
     scenario "user can see their accounts and balances" do
-      account = create(:account, user: user)
+      account = create(:account, user:)
 
       login_as(user)
       visit dashboard_path
@@ -29,24 +29,21 @@ RSpec.describe "User Dashboard", type: :feature do
     end
 
     scenario "user can see their monthly transactions" do
-      category1 = create(:category, user: user)
-      category2 = create(:category, user: user)
-      category3 = create(:category, user: user)
-      category4 = create(:category, user: user2)
-      category5 = create(:category, user: user2)
-      category6 = create(:category, user: user2)
+      category1 = create(:category, user:)
+      category2 = create(:category, user:)
+      category3 = create(:category, user:)
 
       account1 = user.accounts.create!(name: "Test Checking", balance: 1000.00, currency: "USD", account_type: 0)
       account2 = user.accounts.create!(name: "Savings", balance: 1000.00, currency: "USD", account_type: 1)
       account3 = user.accounts.create!(name: "Checking", balance: 5000.00, currency: "USD", account_type: 0)
 
-      transaction1 = user.transactions.create!(amount: 100.00, transaction_type: 1, category: category1, transaction_date: Date.today - 1.month, account: account1, description: "Transaction 1")
-      transaction2 = user.transactions.create!(amount: 250.00, transaction_type: 0, category: category2, transaction_date: Date.today - 1.day, account: account3, description: "Transaction 2")
-      transaction3 = user.transactions.create!(amount: 70.00, transaction_type: 1, category: category3, transaction_date: Date.today, account: account1, description: "Transaction 3")
-      transaction4 = user.transactions.create!(amount: 400.00, transaction_type: 2, category: category1, transaction_date: Date.today - 2.months, account: account3, description: "Transaction 4")
-      transaction5 = user.transactions.create!(amount: 150.00, transaction_type: 1, category: category2, transaction_date: Date.today - 4.day, account: account1, description: "Transaction 5")
-      transaction6 = user.transactions.create!(amount: 30.00, transaction_type: 0, category: category3, transaction_date: Date.today, account: account3, description: "Transaction 6")
-      transaction7 = user.transactions.create!(amount: 200.00, transaction_type: 1, category: category1, transaction_date: Date.today - 3.days, account: account2, description: "Transaction 7")
+      user.transactions.create!(amount: 100.00, transaction_type: 1, category: category1, transaction_date: Time.zone.today - 1.month, account: account1, description: "Transaction 1")
+      user.transactions.create!(amount: 250.00, transaction_type: 0, category: category2, transaction_date: Time.zone.today - 1.day, account: account3, description: "Transaction 2")
+      user.transactions.create!(amount: 70.00, transaction_type: 1, category: category3, transaction_date: Time.zone.today, account: account1, description: "Transaction 3")
+      user.transactions.create!(amount: 400.00, transaction_type: 2, category: category1, transaction_date: Time.zone.today - 2.months, account: account3, description: "Transaction 4")
+      user.transactions.create!(amount: 150.00, transaction_type: 1, category: category2, transaction_date: Time.zone.today - 4.days, account: account1, description: "Transaction 5")
+      user.transactions.create!(amount: 30.00, transaction_type: 0, category: category3, transaction_date: Time.zone.today, account: account3, description: "Transaction 6")
+      user.transactions.create!(amount: 200.00, transaction_type: 1, category: category1, transaction_date: Time.zone.today - 3.days, account: account2, description: "Transaction 7")
 
       login_as(user)
       visit dashboard_path
@@ -64,7 +61,6 @@ RSpec.describe "User Dashboard", type: :feature do
       expect(page).to have_content("Savings")
     end
 
-
     scenario "user can see their 5 most recent transactions" do
       login_as(user)
       visit dashboard_path
@@ -75,7 +71,7 @@ RSpec.describe "User Dashboard", type: :feature do
         end
 
         old_transactions.each do |transaction|
-          expect(page).not_to have_content(transaction.description)
+          expect(page).to have_no_content(transaction.description)
         end
       end
     end

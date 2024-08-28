@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Account, type: :model do
+RSpec.describe Account do
   describe 'validations' do
     it { is_expected.to validate_presence_of(:name) }
     it { is_expected.to validate_presence_of(:account_type) }
