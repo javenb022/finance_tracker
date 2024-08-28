@@ -14,35 +14,25 @@ class User < ApplicationRecord
   validates :first_name, :last_name, :phone_number, :address, :city, :state, :zip_code, :date_of_birth, presence: true
   validates :email, uniqueness: { case_sensitive: false }, presence: true
   validates :password, length: { minimum: 6 }, on: :create
-  validates :date_of_birth, format: { with: /\d{4}-\d{2}-\d{2}/ }
+  validates :date_of_birth, format: { with: /\A\d{4}-\d{2}-\d{2}\z/ }
   validates :state, length: { is: 2 }
-
 
   def grouped_checking_transactions
     checking_accounts = accounts.where(account_type: "checking")
     # This iterates over each checking account and creates a hash with the account as the key and the transactions as the value.
-    transactions_by_account = checking_accounts.each_with_object({}) do |account, hash|
-      hash[account] = account.transactions
-    end
-    transactions_by_account
+    checking_accounts.index_with(&:transactions)
   end
 
   def grouped_savings_transactions
     savings_accounts = accounts.where(account_type: "savings")
     # This iterates over each savings account and creates a hash with the account as the key and the transactions as the value.
-    transactions_by_account = savings_accounts.each_with_object({}) do |account, hash|
-      hash[account] = account.transactions
-    end
-    transactions_by_account
+    savings_accounts.index_with(&:transactions)
   end
 
   def grouped_credit_card_transactions
     credit_card_accounts = accounts.where(account_type: "credit")
     # This iterates over each credit card account and creates a hash with the account as the key and the transactions as the value.
-    transactions_by_account = credit_card_accounts.each_with_object({}) do |account, hash|
-      hash[account] = account.transactions
-    end
-    transactions_by_account
+    credit_card_accounts.index_with(&:transactions)
   end
 
   def recent_transactions
@@ -56,11 +46,10 @@ class User < ApplicationRecord
     data = transactions.find_by_sql("SELECT TO_CHAR(transaction_date, 'YYYY-MM') AS month, SUM(amount) AS total_amount FROM Transactions WHERE transaction_type = 0 GROUP BY TO_CHAR(transaction_date, 'YYYY-MM') ORDER BY month;")
     formatted_data = format_transactions(data)
 
-    formatted_income_data = formatted_data.each_with_object(income_data) do |(month, amount), hash|
+    formatted_data.each_with_object(income_data) do |(month, amount), hash|
       formatted_month = Date.strptime(month, '%Y-%m').strftime('%B %Y')
       hash[formatted_month] = amount
     end
-    formatted_income_data
   end
 
   def monthly_expenses
@@ -70,11 +59,10 @@ class User < ApplicationRecord
     data = transactions.find_by_sql("SELECT TO_CHAR(transaction_date, 'YYYY-MM') AS month, SUM(amount) AS total_amount FROM Transactions WHERE transaction_type = 1 GROUP BY TO_CHAR(transaction_date, 'YYYY-MM') ORDER BY month;")
     formatted_data = format_transactions(data)
 
-    formatted_expense_data = formatted_data.each_with_object(expense_data) do |(month, amount), hash|
+    formatted_data.each_with_object(expense_data) do |(month, amount), hash|
       formatted_month = Date.strptime(month, '%Y-%m').strftime('%B %Y')
       hash[formatted_month] = amount
     end
-    formatted_expense_data
   end
 
   def expenses_by_category
@@ -88,16 +76,14 @@ class User < ApplicationRecord
     end_date = Date.current.end_of_month
 
     all_months = (start_date.to_date..end_date.to_date).map { |date| date.strftime("%B %Y") }.uniq
-    expense_data = all_months.map { |month| [month, 0] }.to_h
-    expense_data
+    all_months.index_with { |_month| 0 }
   end
 
   def format_transactions(data)
-    formatted_data = data.map do |i|
+    data.map do |i|
       [i.month, i.total_amount]
     end
   end
-
 
   private
 
