@@ -2,7 +2,7 @@
 # Using enum for account type (checking, savings, credit).
 class Account < ApplicationRecord
   belongs_to :user
-  has_many :transactions
+  has_many :transactions, dependent: :destroy
 
   validates :name, :account_type, :balance, :currency, presence: true
 
