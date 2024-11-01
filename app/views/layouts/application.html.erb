@@ -11,19 +11,42 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
-    <% flash.each do |type, message| %>
-      <p><%= message %></p>
-    <% end %>
-
-    <% if user_signed_in? %>
-      <%= link_to "Profile", profile_path %>
-      <%= link_to "Dashboard", dashboard_path %>
-      <%= button_to "Sign out", destroy_user_session_path, method: :delete %>
-    <% else %>
-      <%= link_to "Sign in", new_user_session_path %>
-      <%= link_to "Sign up", new_user_registration_path %>
-    <% end %>
+  <body class="" >
+    <nav class="p-4 bg-white shadow-md md:flex md:items-center md:justify-between">
+      <div>
+        <span class="text-2xl font-[Poppins] cursor-pointer">
+          <img class="h-10 inline" src="<%= asset_path('tailwind.png') %>">
+          Finance Tracker
+        </span>
+      </div>
+      <div class="">
+          <% if user_signed_in? %>
+        <ul class="md:flex md:items-center">
+          <li class="hover:text-gray-500 mx-4 my-6 md:my-0">
+            <%= link_to "Profile", profile_path %>
+          </li>
+          <li class="hover:text-gray-500 mx-4 my-6 md:my-0">
+            <%= link_to "Dashboard", dashboard_path %>
+          </li>
+          <li class="bg-[#8FB8ED] text-white px-5 py-2 rounded-full hover:bg-[#a6cbfb] mx-4 my-6 md:my-0">
+            <%= button_to "Sign out", destroy_user_session_path, method: :delete %>
+          </li>
+          <% else %>
+          <li class="hover:text-gray-500 mx-4 my-6 md:my-0">
+            <%= link_to "Sign in", new_user_session_path %>
+          </li>
+          <li class="hover:text-gray-500 mx-4 my-6 md:my-0">
+            <%= link_to "Sign up", new_user_registration_path %>
+          </li>
+          <% end %>
+        </ul>
+      </div>
+    </nav>
+    <div>
+      <% flash.each do |type, message| %>
+        <p><%= message %></p>
+      <% end %>
+    </div>
     <%= yield %>
   </body>
 </html>
