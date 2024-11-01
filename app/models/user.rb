@@ -67,16 +67,26 @@ class User < ApplicationRecord
 
   def expenses_by_category
     # The sum of all transactions where the type is expense and is grouped by category, returning the category name and the total amount spent in that category.
-    results = transactions.find_by_sql("SELECT c.name AS category, SUM(t.amount) AS total_amount FROM Transactions t JOIN Categories c ON t.category_id = c.id WHERE t.transaction_type = 1 GROUP BY c.name ORDER BY total_amount DESC;")
+    results = Transaction.joins(:category).where(transaction_type: 1).group('categories.name').select('categories.name AS category, SUM(transactions.amount) AS total_amount').order('total_amount DESC')
     results.map { |result| [result['category'], result['total_amount']] }
+    # require 'pry'; binding.pry
   end
 
   def initialize_month_hash
-    start_date = transactions.minimum(:transaction_date).beginning_of_month
-    end_date = Date.current.end_of_month
+    # Multiple iterators can cause this to be slow
+    if transactions.empty?
+      start_date = Date.today - 1.year
+      end_date = Date.today.beginning_of_month
 
-    all_months = (start_date.to_date..end_date.to_date).map { |date| date.strftime("%B %Y") }.uniq
-    all_months.index_with { |_month| 0 }
+      all_months = (start_date.to_date..end_date.to_date).map { |date| date.strftime("%B %Y") }.uniq
+      all_months.index_with { |_month| 0 }
+    else
+      start_date = transactions.minimum(:transaction_date).beginning_of_month
+      end_date = Date.current.end_of_month
+
+      all_months = (start_date.to_date..end_date.to_date).map { |date| date.strftime("%B %Y") }.uniq
+      all_months.index_with { |_month| 0 }
+    end
   end
 
   def format_transactions(data)

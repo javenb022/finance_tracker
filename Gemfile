@@ -85,3 +85,7 @@ group :test do
   gem "rubocop-factory_bot"
   gem "rubocop-rails"
 end
+
+gem "tailwindcss-rails", "~> 2.7"
+
+gem "timecop", "~> 0.9.10"

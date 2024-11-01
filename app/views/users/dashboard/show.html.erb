@@ -1,47 +1,37 @@
-<h1><%= @user.first_name %>'s Dashboard</h1>
-<h2>Accounts</h2>
-<% if @grouped_checking_transactions.any? %>
-  <% @grouped_checking_transactions.each do |account, transactions| %>
-    <h3><%= account.name %></h3>
-    <p><%= number_to_currency(account.balance, unit: "$", separator: ".", delimiter: "") %></p>
-    <h4>Current Months Transactions</h4>
-    <% transactions.each do |transaction| %>
-      <li>Description: <%= transaction.description %> - <%= number_to_currency(transaction.amount, unit: "$", separator: ".", delimiter: "") %> Date:<%= transaction.transaction_date %></li>
-    <% end %>
-  <% end %>
-<% end %>
-<% if @grouped_savings_transactions.any? %>
-  <% @grouped_savings_transactions.each do |account, transactions| %>
-    <h3><%= account.name %></h3>
-    <p><%= number_to_currency(account.balance, unit: "$", separator: ".", delimiter: "") %></p>
-    <h4>Current Months Transactions</h4>
-    <% transactions.each do |transaction| %>
-      <li>Description: <%= transaction.description %> - <%= number_to_currency(transaction.amount, unit: "$", separator: ".", delimiter: "") %> Date:<%= transaction.transaction_date %></li>
-    <% end %>
-  <% end %>
-<% end %>
-<% if @grouped_credit_card_transactions.any? %>
-  <% @grouped_credit_card_transactions.each do |account, transactions| %>
-    <h3><%= account.name %></h3>
-    <p><%= number_to_currency(account.balance, unit: "$", separator: ".", delimiter: "") %></p>
-    <h4>Current Months Transactions</h4>
-    <% transactions.each do |transaction| %>
-      <li>Description: <%= transaction.description %> - <%= number_to_currency(transaction.amount, unit: "$", separator: ".", delimiter: "") %> Date:<%= transaction.transaction_date %></li>
-    <% end %>
-  <% end %>
-<% end %>
-<div class="recent-transactions">
-  <h2>Recent Transactions</h2>
-  <% @recent_transactions.each do |transaction| %>
-    <li>Description: <%= transaction.description %> - <%= number_to_currency(transaction.amount, unit: "$", separator: ".", delimiter: "") %> Date:<%= transaction.transaction_date %></li>
-  <% end %>
+<h1 class="flex justify-center text-4xl font-roboto-light py-2 mt-3 "><%= @user.first_name %>'s Dashboard</h1>
+<div class="grid gap-4 grid-cols-3">
+  <h2 class="text-3xl mx-4 inline-flex">Accounts</h2>
+  <h2 class="flex justify-center text-xl">Recent Transactions</h2>
 </div>
-<div class="income-graph">
-  <%= column_chart @monthly_income, title: "Income by Month", xtitle: "Date", ytitle: "Income", colors: ["#C2BBF0", "#8FB8ED"], prefix: "$", thousands: ",", width: "700px", height: "450px" %>
-</div>
-<div class="expenses-graph">
-  <%= column_chart @monthly_expenses, title: "Expenses by Month", xtitle: "Date", ytitle: "Expenses", colors: ["#C2BBF0", "#8FB8ED"], prefix: "$", thousands: ",", width: "700px", height: "450px" %>
-</div>
-<div class="category-chart">
-  <%= pie_chart @expenses_by_category, title: "Expenses By Category", colors: ["#C2BBF0", "#8FB8ED", "#F0C2C2", "#ED8F8F", "#F0EAC2", "#EDF18F"], prefix: "$", thousands: ",", width: "700px", height: "450px" %>
+<div class="grid grid-cols-3 gap-4">
+  <div class="flex shadow-lg border border-black border-opacity-10 ml-4">
+    <div class="m-3 grid grid-flow-row auto-rows-auto w-full space-y-2">
+      <% @accounts.each do |account| %>
+      <div class="border hover:shadow-lg">
+        <h3 class="text-xl font-roboto-light"><%= account.name %></h3>
+        <p class="my-auto">Balance: <%= number_to_currency(account.balance, unit: "$", separator: ".", delimiter: "") %></p>
+      </div>
+      <% end %>
+    </div>
+  </div>
+  <div class="recent-transactions md-flex shadow-lg border border-black border-opacity-10">
+    <div class="">
+      <% @recent_transactions.each do |transaction| %>
+      <div class="flex flex-nowrap pb-1 pt-2 space-y-3 text-sm">
+        <p class="mx-2 basis-1/6">Amount: <%= number_to_currency(transaction.amount, unit: "$", separator: ".", delimiter: "") %></p>
+        <p class="mx-2 basis-1/2">Description: <%= transaction.description %></p>
+        <p class="mx-2 basis-1/4">Date: <%= transaction.transaction_date %></p>
+      </div>
+      <% end %>
+    </div>
+  </div>
+  <div class="income-graph shadow-lg border border-black border-opacity-10 mr-4">
+    <%= column_chart @monthly_income, title: "Income by Month", xtitle: "Date", ytitle: "Income", colors: ["#C2BBF0", "#8FB8ED"], prefix: "$", thousands: ",", width: "450px", height: "300px" %>
+  </div>
+  <div class="expenses-graph">
+    <%= column_chart @monthly_expenses, title: "Expenses by Month", xtitle: "Date", ytitle: "Expenses", colors: ["#C2BBF0", "#8FB8ED"], prefix: "$", thousands: ",", width: "700px", height: "450px" %>
+  </div>
+  <div class="category-chart">
+    <%= pie_chart @expenses_by_category, title: "Expenses By Category", colors: ["#C2BBF0", "#8FB8ED", "#F0C2C2", "#ED8F8F", "#F0EAC2", "#EDF18F"], prefix: "$", thousands: ",", width: "700px", height: "450px" %>
+  </div>
 </div>

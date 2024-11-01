@@ -4,6 +4,7 @@ module Users
 
     def show
       @user = current_user
+      @accounts = @user.accounts
       @grouped_checking_transactions = @user.grouped_checking_transactions
       @grouped_savings_transactions = @user.grouped_savings_transactions
       @grouped_credit_card_transactions = @user.grouped_credit_card_transactions

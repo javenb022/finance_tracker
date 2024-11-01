@@ -12,7 +12,7 @@ RSpec.feature 'User Sign In' do
       click_button 'Sign In'
 
       expect(page).to have_content('Signed in successfully.')
-      expect(page).to have_current_path(root_path)
+      expect(page).to have_current_path(dashboard_path)
     end
   end
 
