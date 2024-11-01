@@ -1,6 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe User do
+  before do
+    Timecop.freeze(Time.zone.local(2024, 8, 1))
+  end
   let!(:user) do
     create(:user, first_name: 'John', last_name: 'Doe', email: 'john@email.com',
                   password: 'password123', phone_number: '123-456-7890',
@@ -76,15 +79,17 @@ RSpec.describe User do
       category = create(:category, user:)
       account = user.accounts.create!(name: "Checking", balance: 4336.07, currency: "USD", account_type: 0)
       user.transactions.create!(amount: 63.80, transaction_type: 0, category:, transaction_date: Time.zone.today, account:, description: "Deposit")
-      user.transactions.create!(amount: 63.80, transaction_type: 0, category:, transaction_date: Time.zone.today - 2.days, account:, description: "Deposit")
-      user.transactions.create!(amount: 63.80, transaction_type: 0, category:, transaction_date: Time.zone.today - 3.days, account:, description: "Deposit")
-      user.transactions.create!(amount: 63.80, transaction_type: 0, category:, transaction_date: Time.zone.today - 4.days, account:, description: "Deposit")
-      user.transactions.create!(amount: 63.80, transaction_type: 0, category:, transaction_date: Time.zone.today - 5.days, account:, description: "Deposit")
-      user.transactions.create!(amount: 63.80, transaction_type: 0, category:, transaction_date: Time.zone.today - 2.months, account:, description: "Deposit")
-      user.transactions.create!(amount: 63.80, transaction_type: 0, category:, transaction_date: Time.zone.today - 2.months, account:, description: "Deposit")
+      user.transactions.create!(amount: 46.79, transaction_type: 0, category:, transaction_date: Time.zone.today - 2.days, account:, description: "Deposit")
+      user.transactions.create!(amount: 10.42, transaction_type: 0, category:, transaction_date: Time.zone.today - 3.days, account:, description: "Deposit")
+      user.transactions.create!(amount: 17.01, transaction_type: 0, category:, transaction_date: Time.zone.today - 4.days, account:, description: "Deposit")
+      user.transactions.create!(amount: 22.20, transaction_type: 0, category:, transaction_date: Time.zone.today - 5.days, account:, description: "Deposit")
+      user.transactions.create!(amount: 6.11, transaction_type: 0, category:, transaction_date: Time.zone.today - 2.months, account:, description: "Deposit")
+      user.transactions.create!(amount: 81.05, transaction_type: 0, category:, transaction_date: Time.zone.today - 2.months, account:, description: "Deposit")
 
-      expect(user.monthly_income).to eq({ Time.zone.today.strftime('%B %Y') => 0.319e3, "July 2024" => 0, "June 2024" => 0.1276e3 })
-      expect(user.monthly_income).not_to include(Time.zone.today - 2.months, 0.63)
+      expected = [["June 2024", 87.16], ["July 2024", 96.42], ["August 2024", 63.8]]
+      actual = user.monthly_income.map { |month, amount| [month, amount.to_f] }
+      expect(actual).to eq(expected)
+      expect(actual).not_to include(Time.zone.today - 2.months, 0.63)
     end
 
     it "#monthly_expenses" do
@@ -98,8 +103,10 @@ RSpec.describe User do
       user.transactions.create!(amount: 63.80, transaction_type: 1, category:, transaction_date: Time.zone.today - 2.months, account:, description: "Bought groceries")
       user.transactions.create!(amount: 63.80, transaction_type: 1, category:, transaction_date: Time.zone.today - 2.months, account:, description: "Bought groceries")
 
-      expect(user.monthly_expenses).to eq({ Time.zone.today.strftime('%B %Y') => 0.319e3, "July 2024" => 0, "June 2024" => 0.1276e3 })
-      expect(user.monthly_expenses).not_to include(Time.zone.today - 2.months, 0.63)
+      expected = [["June 2024", 127.6], ["July 2024", 255.2], ["August 2024", 63.8]]
+      actual = user.monthly_expenses.map { |month, amount| [month, amount.to_f] }
+      expect(actual).to eq(expected)
+      expect(actual).not_to include(Time.zone.today - 2.months, 0.63)
     end
 
     it "#initialize_month_hash" do
@@ -128,7 +135,7 @@ RSpec.describe User do
       user.transactions.create!(amount: 63.80, transaction_type: 1, category:, transaction_date: Time.zone.today - 2.months, account:, description: "Bought groceries")
       data = user.transactions.find_by_sql("SELECT TO_CHAR(transaction_date, 'YYYY-MM') AS month, SUM(amount) AS total_amount FROM Transactions WHERE transaction_type = 1 GROUP BY TO_CHAR(transaction_date, 'YYYY-MM') ORDER BY month;")
 
-      expected = [["2024-06", 127.6], ["2024-08", 319.0]]
+      expected = [["2024-06", 127.6], ["2024-07", 255.2], ["2024-08", 63.8]]
       actual = user.format_transactions(data)
       actual_formatted = actual.map { |month, amount| [month, amount.to_f] }
 
