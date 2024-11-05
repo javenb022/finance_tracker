@@ -3,12 +3,12 @@ version: 2.1
 jobs:
   test:
     docker:
-      - image: circleci/ruby:3.0  # Use Ruby version as per your app's Gemfile
+      - image: cimg/ruby:3.2.2  # Use Ruby version as per your app's Gemfile
       - image: circleci/postgres:13  # PostgreSQL for database
 
     environment:
       RAILS_ENV: test
-      DATABASE_URL: postgres://postgres@localhost:5432/finance_tracker_test  # Replace `myapp_test` with your test database name
+      DATABASE_URL: postgres://postgres@localhost:5432/finance_tracker_test
 
     steps:
       - checkout  # Checkout the code
@@ -22,7 +22,7 @@ jobs:
             bundle exec rails db:schema:load
       - run:
           name: Run Tests
-          command: bundle exec rails test  # For Minitest
+          command: bundle exec rspec
           # If using RSpec, use: command: bundle exec rspec
 
 workflows:
