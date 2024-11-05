@@ -2,7 +2,7 @@
 # The User model is used to store user data such as first name, last name, email, phone number, address, city, state, zip code, date of birth, and password.
 # This model also includes validations for the user data, such as presence, uniqueness, and length validations.
 class User < ApplicationRecord
-  before_save :downcase_email
+  before_save :downcase_email, :format_phone_number
   has_many :accounts, dependent: :destroy
   has_many :categories, dependent: :destroy
   has_many :transactions, dependent: :destroy
@@ -14,7 +14,7 @@ class User < ApplicationRecord
   validates :first_name, :last_name, :phone_number, :address, :city, :state, :zip_code, :date_of_birth, presence: true
   validates :email, uniqueness: { case_sensitive: false }, presence: true
   validates :password, length: { minimum: 6 }, on: :create
-  validates :date_of_birth, format: { with: /\A\d{4}-\d{2}-\d{2}\z/ }
+  validates :date_of_birth, format: { with: /\A\d{4}-\d{2}-\d{2}\z/ } # YYYY-MM-DD
   validates :state, length: { is: 2 }
 
   def grouped_checking_transactions
@@ -100,5 +100,12 @@ class User < ApplicationRecord
   def downcase_email
     # This method is called to handle email case sensitivity and downcase the email before saving it to the database.
     self.email = email.downcase
+  end
+
+  def format_phone_number
+    # This method is called to format the phone number before saving it to the database.
+    # The phone number is formatted as (XXX) XXX-XXXX.
+    self.phone_number = phone_number.gsub(/[^0-9]/, '')
+    self.phone_number = phone_number.gsub(/(\d{3})(\d{3})(\d{4})/, '(\1) \2-\3')
   end
 end
