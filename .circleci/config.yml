@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   test:
     docker:
-      - image: circleci/ruby:3.2.2  # Use Ruby version as per your app's Gemfile
+      - image: circleci/ruby:3.2  # Use Ruby version as per your app's Gemfile
       - image: circleci/postgres:13  # PostgreSQL for database
 
     environment:
