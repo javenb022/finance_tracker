@@ -1,15 +1,77 @@
-<h1><%= @user.first_name %>'s Profile</h1>
-<div>
-  <p><strong>First Name:</strong> <%= @user.first_name %></p>
-  <p><strong>Last Name:</strong> <%= @user.last_name %></p>
-  <p><strong>Email:</strong> <%= @user.email %></p>
-  <p><strong>Phone Number:</strong> <%= @user.phone_number %></p>
-  <p><strong>Address:</strong> <%= @user.address %></p>
-  <p><strong>City:</strong> <%= @user.city %></p>
-  <p><strong>State:</strong> <%= @user.state %></p>
-  <p><strong>Zip Code:</strong> <%= @user.zip_code %></p>
-  <p><strong>Date of Birth:</strong> <%= @user.date_of_birth %></p>
-
-  <p><%= link_to "Edit Profile", edit_user_registration_path %></p>
-  <p><%= link_to "Back", root_path %></p>
+<div class="size-2/4 mx-auto m-4 shadow-lg shadow-cyan-600 drop-shadow-md">
+  <h1 class="flex justify-center py-3 text-3xl"><%= @user.first_name %>'s Profile</h1>
+  <div class="size-4/5 mx-auto">
+    <div class="flex space-x-6 ">
+      <div class="w-1/2">
+        <label for"first-name-input" class="text-sm">First Name</label>
+        <input type="text" id="first-name-input" aria-label="disabled input" class="mb-6 bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-100 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" value="<%= @user.first_name %>" disabled>
+      </div>
+      <div class="w-1/2">
+        <label for"last-name-input" class="text-sm">Last Name</label>
+        <input type="text" id="last-name-input" aria-label="disabled input" class="mb-6 bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-100 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" value="<%= @user.last_name %>" disabled>
+      </div>
+    </div>
+    <div class="flex justify-center mx-auto">
+      <div class="w-full">
+        <label for="email-input" class="block mb-1 text-sm text-gray-900">Your Email</label>
+        <div class="relative mb-6">
+          <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+            <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 16">
+                <path d="m10.036 8.278 9.258-7.79A1.979 1.979 0 0 0 18 0H2A1.987 1.987 0 0 0 .641.541l9.395 7.737Z"/>
+                <path d="M11.241 9.817c-.36.275-.801.425-1.255.427-.428 0-.845-.138-1.187-.395L0 2.6V14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2.5l-8.759 7.317Z"/>
+            </svg>
+          </div>
+          <input type="text" id="email-input" class="mb-6 bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 cursor-not-allowed dark:bg-gray-100 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" value="<%= @user.email %>" disabled>
+        </div>
+      </div>
+    </div>
+    <div class="flex justify-center mx-auto">
+      <div class="w-full">
+        <label for="phone-input" class="block mb-1 text-sm text-gray-900">Phone Number</label>
+        <div class="relative mb-6">
+          <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+            <svg class="w-6 h-6 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.427 14.768 17.2 13.542a1.733 1.733 0 0 0-2.45 0l-.613.613a1.732 1.732 0 0 1-2.45 0l-1.838-1.84a1.735 1.735 0 0 1 0-2.452l.612-.613a1.735 1.735 0 0 0 0-2.452L9.237 5.572a1.6 1.6 0 0 0-2.45 0c-3.223 3.2-1.702 6.896 1.519 10.117 3.22 3.221 6.914 4.745 10.12 1.535a1.601 1.601 0 0 0 0-2.456Z"/>
+            </svg>
+          </div>
+          <input type="text" id="phone-input" class="mb-6 bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 cursor-not-allowed dark:bg-gray-100 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" value="<%= @user.phone_number %>" disabled>
+        </div>
+      </div>
+    </div>
+    <div class="flex space-x-6 ">
+      <div class="w-1/2">
+        <label for"address-input" class="text-sm">Address</label>
+        <input type="text" id="address-input" aria-label="address input" class="mb-6 bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-100 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" value="<%= @user.address %>" disabled>
+      </div>
+      <div class="w-1/4">
+        <label for"city-input" class="text-sm">City</label>
+        <input type="text" id="city-input" aria-label="disabled input" class="mb-6 bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-100 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" value="<%= @user.city %>" disabled>
+      </div>
+      <div class="w-1/4">
+        <label for"state-input" class="text-sm">State</label>
+        <input type="text" id="state-input" aria-label="disabled input" class="mb-6 bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-100 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" value="<%= @user.state %>" disabled>
+      </div>
+    </div>
+    <div class="flex space-x-6 ">
+      <div class="w-1/2">
+        <label for"zip-code-input" class="text-sm">Zip Code</label>
+        <input type="text" id="zip-code-input" aria-label="disabled input" class="mb-6 bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-100 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" value="<%= @user.zip_code %>" disabled>
+      </div>
+      <div class="w-1/2">
+        <label for"date-of-birth-input" class="text-sm">Date Of Birth</label>
+        <input type="text" id="date-of-birth-input" aria-label="disabled input" class="mb-6 bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-100 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" value="<%= @user.date_of_birth %>" disabled>
+      </div>
+    </div>
+    <div class="flex justify-center space-x-5">
+      <button type="button" class="mb-6 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+        <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z"/>
+        </svg>
+        <%= link_to "Edit Profile", edit_user_registration_path %>
+      </button>
+      <button type="button" class="mb-6 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+        <%= link_to "Back to Dashboard", root_path %>
+      </button>
+    </div>
+  </div>
 </div>

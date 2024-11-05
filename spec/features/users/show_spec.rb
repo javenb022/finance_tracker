@@ -1,4 +1,5 @@
 require "rails_helper"
+require "date"
 
 RSpec.feature "User show page" do
   let(:user) { create(:user) }
@@ -10,17 +11,25 @@ RSpec.feature "User show page" do
     end
 
     scenario "user can see their profile" do
-      expect(page).to have_content("#{user.first_name}'s Profile")
-      expect(page).to have_content(user.first_name)
-      expect(page).to have_content(user.last_name)
-      expect(page).to have_content(user.email)
-      expect(page).to have_content(user.phone_number)
-      expect(page).to have_content(user.address)
-      expect(page).to have_content(user.city)
-      expect(page).to have_content(user.state)
-      expect(page).to have_content(user.zip_code)
-      expect(page).to have_content(user.date_of_birth)
-      expect(page).to have_link("Edit Profile")
+      disabled_first_name = find('input#first-name-input', visible: false).value
+      expect(disabled_first_name).to eq(user.first_name)
+      disabled_last_name = find('input#last-name-input', visible: false).value
+      expect(disabled_last_name).to eq(user.last_name)
+      disabled_email = find('input#email-input', visible: false).value
+      expect(disabled_email).to eq(user.email)
+      disabled_phone = find('input#phone-input', visible: false).value
+      expect(disabled_phone).to eq(user.phone_number)
+      disabled_address = find('input#address-input', visible: false).value
+      expect(disabled_address).to eq(user.address)
+      disabled_city = find('input#city-input', visible: false).value
+      expect(disabled_city).to eq(user.city)
+      disabled_state = find('input#state-input', visible: false).value
+      expect(disabled_state).to eq(user.state)
+      disabled_zip_code = find('input#zip-code-input', visible: false).value
+      expect(disabled_zip_code).to eq(user.zip_code)
+      disabled_date_of_birth = find('input#date-of-birth-input', visible: false).value
+      expected_date = user.date_of_birth.strftime("%Y-%m-%d")
+      expect(disabled_date_of_birth).to eq(expected_date)
     end
 
     scenario "user can click on the edit profile link" do
