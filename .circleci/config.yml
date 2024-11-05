@@ -4,7 +4,7 @@ jobs:
   test:
     docker:
       - image: cimg/ruby:3.2.2  # Use Ruby version as per your app's Gemfile
-      - image: cimg/postgres:14  # PostgreSQL for database
+      - image: circleci/postgres:13  # PostgreSQL for database
 
     environment:
       RAILS_ENV: test
