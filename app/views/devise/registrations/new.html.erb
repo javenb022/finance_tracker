@@ -1,69 +1,118 @@
-<h2>Sign up</h2>
+<head>
+  <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css" rel="stylesheet" />
+</head>
+<body>
+  <div class="size-2/4 mx-auto m-4 shadow-lg shadow-cyan-600">
+    <div class="size-4/5 mx-auto">
+      <h2 class="text-3xl my-5">Sign up</h2>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
+        <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+          <%= render "devise/shared/error_messages", resource: resource %>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+        <div class="flex space-x-6">
+          <div class="w-1/2">
+            <%= f.label :first_name, "First Name", class: "text-sm" %>
+            <%= f.text_field :first_name, class: "mb-6 bg-gray-100 border border-black-800 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-100 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" %>
+          </div>
+          <div class="w-1/2">
+            <%= f.label :last_name, "Last Name", class: "text-sm" %>
+            <%= f.text_field :last_name, class: "mb-6 bg-gray-100 border border-black-800 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-100 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" %>
+          </div>
+        </div>
+
+        <div class="flex justify-center mx-auto">
+          <div class="w-full">
+            <%= f.label :email, "Email", class: "block mb-1 text-sm" %>
+            <div class="relative mb-6">
+              <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 16">
+                    <path d="m10.036 8.278 9.258-7.79A1.979 1.979 0 0 0 18 0H2A1.987 1.987 0 0 0 .641.541l9.395 7.737Z"/>
+                    <path d="M11.241 9.817c-.36.275-.801.425-1.255.427-.428 0-.845-.138-1.187-.395L0 2.6V14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2.5l-8.759 7.317Z"/>
+                </svg>
+              </div>
+              <%= f.text_field :email, class: "mb-6 bg-gray-100 border border-black-800 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-100 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" %>
+            </div>
+          </div>
+        </div>
+
+        <div class="w-full">
+          <%= f.label :phone_number, class: "block mb-1 text-sm" %>
+          <div class="relative mb-6">
+            <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+              <svg class="w-6 h-6 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.427 14.768 17.2 13.542a1.733 1.733 0 0 0-2.45 0l-.613.613a1.732 1.732 0 0 1-2.45 0l-1.838-1.84a1.735 1.735 0 0 1 0-2.452l.612-.613a1.735 1.735 0 0 0 0-2.452L9.237 5.572a1.6 1.6 0 0 0-2.45 0c-3.223 3.2-1.702 6.896 1.519 10.117 3.22 3.221 6.914 4.745 10.12 1.535a1.601 1.601 0 0 0 0-2.456Z"/>
+              </svg>
+            </div>
+            <%= f.text_field :phone_number, class: "mb-6 bg-gray-100 border border-black-800 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-100 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" %>
+          </div>
+        </div>
+        <div class="flex space-x-6 ">
+          <div class="w-1/2">
+            <%= f.label :address, class: "text-sm" %>
+            <%= f.text_field :address, class: "mb-6 bg-gray-100 border border-black-800 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-100 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" %>
+          </div>
+          <div class="w-1/4">
+            <%= f.label :city, class: "text-sm" %>
+            <%= f.text_field :city, class: "mb-6 bg-gray-100 border border-black-800 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-100 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" %>
+          </div>
+          <div class="w-1/4">
+            <%= f.label :state, "State", class: "text-sm" %>
+            <%= f.select :state, options_for_select(us_states, @user.state), { prompt: "Select a state" }, class: "mb-6 bg-gray-100 border border-black-800 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-100 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" %>
+          </div>
+        </div>
+        <div class="flex space-x-6">
+          <div class="w-1/2">
+            <%= f.label :zip_code, "Zip Code", class: "text-sm" %>
+            <%= f.text_field :zip_code, pattern: '\d{5}', maxlength: 5, class: "mb-6 bg-gray-100 border border-black-800 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-100 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" %>
+          </div>
+          <div class="w-1/2">
+            <%= f.label :date_of_birth, "Date Of Birth", class: "text-sm" %>
+            <div class="relative max-w-sm">
+              <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
+                </svg>
+              </div>
+              <%= f.text_field :date_of_birth, id: "datepicker-autohide", class: "mb-6 bg-gray-100 border border-black-800 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-100 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black-400 dark:focus:ring-blue-500 dark:focus:border-blue-500", data: { datepicker: true, datepicker_autohide: true, datepicker_format: "yyyy-mm-dd" } %>
+            </div>
+          </div>
+        </div>
+        <div class="w-full">
+          <%= f.label :password, "Password", class: "text-sm" %>
+          <%= f.password_field :password, class: "mb-1 bg-gray-100 border border-black-800 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-100 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" %>
+          <% if @minimum_password_length %>
+            <em class="text-sm">- <%= @minimum_password_length %> characters minimum</em>
+          <% end %>
+        </div>
+        <div class="w-full mt-4">
+          <%= f.label :password_confirmation, "Confirm Password", class: "text-sm" %>
+          <%= f.password_field :password_confirmation, class: "mb-6 bg-gray-100 border border-black-800 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-100 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" %>
+        </div>
+
+        <div class="actions">
+          <%= f.submit "Sign up", class: "text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800" %>
+        </div>
+      <% end %>
+
+      <div class="">
+        <p>Already have an account?</p>
+      </div>
+
+        <div class="my-3">
+          <%- if controller_name != 'sessions' %>
+            <%= link_to "Log in", new_session_path(resource_name), class: "text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800" %>
+          <% end %>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const datepickerEl = document.getElementById('datepicker-autohide');
+      new Datepicker(datepickerEl, {
+        autohide: true,
+        format: 'yyyy-mm-dd'
+      });
+    });
+    </script>
   </div>
-
-  <div class="field">
-    <%= f.label :password %>
-    <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
-    <% end %><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :first_name %><br />
-    <%= f.text_field :first_name, autocomplete: "first_name" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :last_name %><br />
-    <%= f.text_field :last_name %>
-  </div>
-
-  <div class="field">
-    <%= f.label :phone_number %><br />
-    <%= f.telephone_field :phone_number %>
-  </div>
-
-  <div class="field">
-    <%= f.label :address %><br />
-    <%= f.text_field :address %>
-  </div>
-
-  <div class="field">
-    <%= f.label :city %><br />
-    <%= f.text_field :city %>
-  </div>
-
-  <div class="field">
-    <%= f.label :state %><br />
-    <%= f.text_field :state %>
-  </div>
-
-  <div class="field">
-    <%= f.label :zip_code %><br />
-    <%= f.text_field :zip_code %>
-  </div>
-
-  <div class="field">
-    <%= f.label :date_of_birth %><br />
-    <%= f.date_field :date_of_birth %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Sign up" %>
-  </div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+</body>
