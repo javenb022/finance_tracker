@@ -17,9 +17,9 @@ RSpec.feature "User Signup" do
       fill_in "user_phone_number", with: "987-654-3210"
       fill_in "user_address", with: "456 Elm St"
       fill_in "user_city", with: "Othertown"
-      fill_in "user_state", with: "CA"
+      select "California", from: "user_state"
       fill_in "user_zip_code", with: "54321"
-      fill_in "user_date_of_birth", with: "2000-01-01"
+      fill_in "user[date_of_birth]", with: "2000-01-01"
       click_button "Sign up"
 
       expect(page).to have_content("Welcome! You have signed up successfully.")
@@ -41,9 +41,9 @@ RSpec.feature "User Signup" do
       fill_in "user_phone_number", with: user.phone_number
       fill_in "user_address", with: user.address
       fill_in "user_city", with: user.city
-      fill_in "user_state", with: user.state
+      select "California", from: "user_state"
       fill_in "user_zip_code", with: user.zip_code
-      fill_in "user_date_of_birth", with: user.date_of_birth
+      fill_in "user[date_of_birth]", with: user.date_of_birth
       click_button "Sign up"
 
       expect(page).to have_content("Email has already been taken")
@@ -61,9 +61,9 @@ RSpec.feature "User Signup" do
       fill_in "user_phone_number", with: user.phone_number
       fill_in "user_address", with: user.address
       fill_in "user_city", with: user.city
-      fill_in "user_state", with: user.state
+      select "California", from: "user_state"
       fill_in "user_zip_code", with: user.zip_code
-      fill_in "user_date_of_birth", with: user.date_of_birth
+      fill_in "user[date_of_birth]", with: user.date_of_birth
       click_button "Sign up"
 
       expect(page).to have_content("Password confirmation doesn't match Password")
@@ -81,9 +81,9 @@ RSpec.feature "User Signup" do
       fill_in "user_phone_number", with: user.phone_number
       fill_in "user_address", with: user.address
       fill_in "user_city", with: user.city
-      fill_in "user_state", with: user.state
+      select "California", from: "user_state"
       # fill_in "user_zip_code", with: user.zip_code
-      fill_in "user_date_of_birth", with: user.date_of_birth
+      fill_in "user[date_of_birth]", with: user.date_of_birth
       click_button "Sign up"
 
       expect(page).to have_content("Last name can't be blank")
