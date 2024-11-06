@@ -19,27 +19,27 @@
           Finance Tracker
         </span>
       </div>
-      <div class="">
+      <div class="flex">
           <% if user_signed_in? %>
-        <ul class="md:flex md:items-center">
-          <li class="hover:text-gray-500 mx-4 my-6 md:my-0">
+        <div class="md:flex md:items-center">
+          <div class="hover:text-gray-500 mx-4 my-6 md:my-0 text-lg">
             <%= link_to "Profile", profile_path %>
-          </li>
-          <li class="hover:text-gray-500 mx-4 my-6 md:my-0">
+          </div>
+          <div class="hover:text-gray-500 mx-4 my-6 md:my-0 text-lg">
             <%= link_to "Dashboard", dashboard_path %>
-          </li>
-          <li class="bg-[#8FB8ED] text-white px-5 py-2 rounded-full hover:bg-[#a6cbfb] mx-4 my-6 md:my-0">
+          </div>
+          <div class="bg-[#8FB8ED] text-white px-5 py-2 rounded-full hover:bg-[#a6cbfb] mx-4 my-6 md:my-0">
             <%= button_to "Sign out", destroy_user_session_path, method: :delete %>
-          </li>
+          </div>
           <% else %>
-          <li class="hover:text-gray-500 mx-4 my-6 md:my-0">
+          <div class="hover:text-gray-500 mx-4 my-6 md:my-0 text-lg ">
             <%= link_to "Sign in", new_user_session_path %>
-          </li>
-          <li class="hover:text-gray-500 mx-4 my-6 md:my-0">
+          </div>
+          <div class="hover:text-gray-500 mx-4 my-6 md:my-0 text-lg">
             <%= link_to "Sign up", new_user_registration_path %>
-          </li>
+          </div>
           <% end %>
-        </ul>
+        </div>
       </div>
     </nav>
     <div>
