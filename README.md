@@ -1,3 +1,7 @@
-Test account: sallen@email.com, password123
+Test account: sallen@email.com, password
 
-Color Pallete: #F1E3F3, #C2BBF0, #8FB8ED
+## Setup
+1. Fork and Clone repo
+2. Install Gem Packages `bundle install`
+3. Setup the Database `rails db:create`
+4. Run the server `bin/dev`
