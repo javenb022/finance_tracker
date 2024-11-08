@@ -31,39 +31,6 @@ RSpec.describe "User Dashboard" do
       expect(page).to have_content("$#{account.balance}")
     end
 
-    # scenario "user can see their monthly transactions" do
-    #   category1 = create(:category, user:)
-    #   category2 = create(:category, user:)
-    #   category3 = create(:category, user:)
-
-    #   account1 = user.accounts.create!(name: "Test Checking", balance: 1000.00, currency: "USD", account_type: 0)
-    #   account2 = user.accounts.create!(name: "Savings", balance: 1000.00, currency: "USD", account_type: 1)
-    #   account3 = user.accounts.create!(name: "Checking", balance: 5000.00, currency: "USD", account_type: 0)
-
-    #   user.transactions.create!(amount: 100.00, transaction_type: 1, category: category1, transaction_date: Time.zone.today - 1.month, account: account1, description: "Transaction 1")
-    #   user.transactions.create!(amount: 250.00, transaction_type: 0, category: category2, transaction_date: Time.zone.today - 1.day, account: account3, description: "Transaction 2")
-    #   user.transactions.create!(amount: 70.00, transaction_type: 1, category: category3, transaction_date: Time.zone.today, account: account1, description: "Transaction 3")
-    #   user.transactions.create!(amount: 400.00, transaction_type: 2, category: category1, transaction_date: Time.zone.today - 2.months, account: account3, description: "Transaction 4")
-    #   user.transactions.create!(amount: 150.00, transaction_type: 1, category: category2, transaction_date: Time.zone.today - 4.days, account: account1, description: "Transaction 5")
-    #   user.transactions.create!(amount: 30.00, transaction_type: 0, category: category3, transaction_date: Time.zone.today, account: account3, description: "Transaction 6")
-    #   user.transactions.create!(amount: 200.00, transaction_type: 1, category: category1, transaction_date: Time.zone.today - 3.days, account: account2, description: "Transaction 7")
-
-    #   login_as(user)
-    #   visit dashboard_path
-
-    #   # expect(page).to have_content("Current Months Transactions")
-    #   expect(page).to have_content("Transaction 1")
-    #   expect(page).to have_content("Transaction 2")
-    #   expect(page).to have_content("Transaction 3")
-    #   expect(page).to have_content("Transaction 4")
-    #   expect(page).to have_content("Transaction 5")
-    #   expect(page).to have_content("Transaction 6")
-    #   expect(page).to have_content("Transaction 7")
-
-    #   expect(page).to have_content("Test Checking")
-    #   expect(page).to have_content("Savings")
-    # end
-
     scenario "user can see their 5 most recent transactions" do
       login_as(user)
       visit dashboard_path

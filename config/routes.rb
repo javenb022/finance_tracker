@@ -8,5 +8,6 @@ Rails.application.routes.draw do
   devise_scope :user do
     get "profile", to: "users/registrations#show"
     get "dashboard", to: "users/dashboard#show"
+    post "account", to: "users/account#create"
   end
 end

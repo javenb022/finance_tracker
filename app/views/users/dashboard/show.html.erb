@@ -1,37 +1,81 @@
-<h1 class="flex justify-center text-4xl font-roboto-light py-2 mt-3 "><%= @user.first_name %>'s Dashboard</h1>
-<div class="grid gap-4 grid-cols-3">
-  <h2 class="text-3xl mx-4 inline-flex">Accounts</h2>
-  <h2 class="flex justify-center text-xl">Recent Transactions</h2>
-</div>
-<div class="grid grid-cols-3 gap-4">
-  <div class="flex shadow-lg border border-black border-opacity-10 ml-4">
-    <div class="m-3 grid grid-flow-row auto-rows-auto w-full space-y-2">
-      <% @accounts.each do |account| %>
-      <div class="border hover:shadow-lg">
-        <h3 class="text-xl font-roboto-light"><%= account.name %></h3>
-        <p class="my-auto">Balance: <%= number_to_currency(account.balance, unit: "$", separator: ".", delimiter: "") %></p>
+<body class="">
+  <h1 class="flex justify-center text-4xl font-roboto-light py-2 mt-3 "><%= @user.first_name %>'s Dashboard</h1>
+  <div class="flex justify-between">
+    <div class="flex justify-between items-center border border-black">
+      <h2 class="text-3xl mr-auto">Accounts</h2>
+      <button id="add-account" onclick="toggleModal(true)" class="bg-blue-500 hover:bg-blue-400 text-black px-4 py-2 rounded cursor-pointer ml-auto">Open Modal</button>
+    </div>
+    <h2 class="flex justify-center text-xl">Recent Transactions</h2>
+  </div>
+  <div class="grid grid-cols-3 gap-4">
+    <div class="flex shadow-lg border border-black border-opacity-10 ml-4">
+      <div class="m-3 grid grid-flow-row auto-rows-auto w-full space-y-2">
+        <% @accounts.each do |account| %>
+        <div class="border hover:shadow-lg">
+          <h3 class="text-xl font-roboto-light"><%= account.name %></h3>
+          <p class="my-auto">Balance: <%= number_to_currency(account.balance, unit: "$", separator: ".", delimiter: "") %></p>
+        </div>
+        <% end %>
       </div>
-      <% end %>
+    </div>
+    <div class="recent-transactions md-flex shadow-lg border border-black border-opacity-10">
+    <h2 class="flex col-start-3 justify-center text-xl">Recent Transactions</h2>
+      <div class="">
+        <% @recent_transactions.each do |transaction| %>
+        <div class="flex flex-nowrap pb-1 pt-2 space-y-3 text-sm">
+          <p class="mx-2 basis-1/6">Amount: <%= number_to_currency(transaction.amount, unit: "$", separator: ".", delimiter: "") %></p>
+          <p class="mx-2 basis-1/2">Description: <%= transaction.description %></p>
+          <p class="mx-2 basis-1/4">Date: <%= transaction.transaction_date %></p>
+        </div>
+        <% end %>
+      </div>
+    </div>
+    <div class="income-graph shadow-lg border border-black border-opacity-10 mr-4">
+      <%= column_chart @monthly_income, title: "Income by Month", xtitle: "Date", ytitle: "Income", colors: ["#C2BBF0", "#8FB8ED"], prefix: "$", thousands: ",", width: "450px", height: "300px" %>
+    </div>
+    <div class="expenses-graph">
+      <%= column_chart @monthly_expenses, title: "Expenses by Month", xtitle: "Date", ytitle: "Expenses", colors: ["#C2BBF0", "#8FB8ED"], prefix: "$", thousands: ",", width: "700px", height: "450px" %>
+    </div>
+    <div class="category-chart">
+      <%= pie_chart @expenses_by_category, title: "Expenses By Category", colors: ["#C2BBF0", "#8FB8ED", "#F0C2C2", "#ED8F8F", "#F0EAC2", "#EDF18F"], prefix: "$", thousands: ",", width: "700px", height: "450px" %>
     </div>
   </div>
-  <div class="recent-transactions md-flex shadow-lg border border-black border-opacity-10">
-    <div class="">
-      <% @recent_transactions.each do |transaction| %>
-      <div class="flex flex-nowrap pb-1 pt-2 space-y-3 text-sm">
-        <p class="mx-2 basis-1/6">Amount: <%= number_to_currency(transaction.amount, unit: "$", separator: ".", delimiter: "") %></p>
-        <p class="mx-2 basis-1/2">Description: <%= transaction.description %></p>
-        <p class="mx-2 basis-1/4">Date: <%= transaction.transaction_date %></p>
-      </div>
+
+  <div class="">
+    <div id="modal" class="hidden fixed inset-0 bg-gray-900 bg-opacity-50 justify-center items-center">
+      <div class="w-4/12 mx-auto mt-32 bg-white p-8 rounded shadow-lg border border-black">
+        <%= form_with model: @account, url: account_path, method: :post, local: true do |f| %>
+        <div class="flex-row">
+          <h1 class="text-2xl">Add Account</h1>
+          <div class="flex space-x-6 mt-3">
+            <div class=" w-1/2">
+              <%= f.label :name, "Account Name" %>
+              <%= f.text_field :name, placeholder: "Ex: Chase Checking", class: "mb-6 bg-gray-100 border border-black-800 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-100 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" %>
+            </div>
+            <div class="w-1/2">
+              <%= f.label :balance, "Account Balance" %>
+              <%= f.text_field :balance, placeholder: "Ex: 300", class: "mb-4 bg-gray-100 border border-black-800 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-100 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" %>
+            </div>
+          </div>
+          <div class="flex-row space-x-2 mb-4">
+            <p>Account Type</p>
+            <%= f.radio_button :account_type, "checking" %>
+            <%= f.label :account_type, "Checking" %>
+            <%= f.radio_button :account_type, "savings" %>
+            <%= f.label :account_type, "Savings" %>
+            <%= f.radio_button :account_type, "credit" %>
+            <%= f.label :account_type, "Credit" %>
+          </div>
+          <div>
+            <%= f.hidden_field :currency, value: "USD" %>
+          </div>
+          <div>
+            <%= f.submit "Add Account", class: "text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800" %>
+          </div>
+          <button type="button" onclick="toggleModal(false)" class=" text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Cancel</button>
+        </div>
       <% end %>
+      </div>
     </div>
   </div>
-  <div class="income-graph shadow-lg border border-black border-opacity-10 mr-4">
-    <%= column_chart @monthly_income, title: "Income by Month", xtitle: "Date", ytitle: "Income", colors: ["#C2BBF0", "#8FB8ED"], prefix: "$", thousands: ",", width: "450px", height: "300px" %>
-  </div>
-  <div class="expenses-graph">
-    <%= column_chart @monthly_expenses, title: "Expenses by Month", xtitle: "Date", ytitle: "Expenses", colors: ["#C2BBF0", "#8FB8ED"], prefix: "$", thousands: ",", width: "700px", height: "450px" %>
-  </div>
-  <div class="category-chart">
-    <%= pie_chart @expenses_by_category, title: "Expenses By Category", colors: ["#C2BBF0", "#8FB8ED", "#F0C2C2", "#ED8F8F", "#F0EAC2", "#EDF18F"], prefix: "$", thousands: ",", width: "700px", height: "450px" %>
-  </div>
-</div>
+</body>
