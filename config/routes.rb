@@ -9,5 +9,6 @@ Rails.application.routes.draw do
     get "profile", to: "users/registrations#show"
     get "dashboard", to: "users/dashboard#show"
     post "account", to: "users/account#create"
+    post "transaction", to: "users/transaction#create"
   end
 end
