@@ -1,4 +1,6 @@
-Test account: sallen@email.com, password
+Test account: 
+Email: sallen@email.com 
+Password: password
 
 ## Setup
 1. Fork and Clone repo
