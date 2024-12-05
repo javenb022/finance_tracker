@@ -5,6 +5,7 @@ module Users
     def create
       @account = current_user.accounts.create(account_params)
       if @account.save
+        flash[:notice] = "Account added successfully"
         redirect_to dashboard_path
       else
         redirect_to dashboard_path, alert: "Account was not created. Please try again."
