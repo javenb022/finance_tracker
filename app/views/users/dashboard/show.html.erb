@@ -13,7 +13,7 @@
   </div>
   <div class="grid grid-cols-3 gap-4">
     <div class="flex shadow-lg border border-black border-opacity-10 ml-4">
-      <div class="m-3 grid grid-flow-row auto-rows-auto w-full space-y-2">
+      <div class="m-3 grid grid-flow-row auto-rows-auto overflow-y-auto max-h-72 w-full space-y-2">
         <% @accounts.each do |account| %>
         <div class="border hover:shadow-lg">
           <h3 class="text-xl font-roboto-light"><%= account.name %></h3>
@@ -25,7 +25,7 @@
     <div class="recent-transactions md-flex shadow-lg border border-black border-opacity-10">
       <div class="">
         <% @recent_transactions.each do |transaction| %>
-        <div class="flex flex-nowrap pb-1 pt-2 space-y-3 text-sm">
+        <div class="flex flex-nowrap pb-1 pt-2 space-y-3 text-sm border hover:shadow-lg">
           <p class="mx-2 basis-1/6">Amount: <%= number_to_currency(transaction.amount, unit: "$", separator: ".", delimiter: "") %></p>
           <p class="mx-2 basis-1/2">Description: <%= transaction.description %></p>
           <p class="mx-2 basis-1/4">Date: <%= transaction.transaction_date %></p>
@@ -73,7 +73,7 @@
             <%= f.hidden_field :currency, value: "USD" %>
           </div>
           <div>
-            <%= f.submit "Add Account", class: "text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800" %>
+            <%= f.submit "Add Account", id: "submit-account", class: "text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800" %>
           </div>
           <button type="button" onclick="toggleAccountModal(false)" class=" text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Cancel</button>
         </div>
